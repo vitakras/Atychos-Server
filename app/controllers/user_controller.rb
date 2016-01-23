@@ -43,7 +43,7 @@ class UserController < ApplicationController
             @members = @user.members
             
             @members.each do |member|
-                send_message member.number,  "This is a test msg http://maps.google.com/?ll=#{lat},lon#{lon}"
+                send_message member.number,  "Something bad happened at http://maps.google.com/?ll=#{lat},lon#{lon}"
             end
             render json: "{\"ok\":\"msg sent\"}"
         else
