@@ -33,17 +33,35 @@ class UserController < ApplicationController
     
     #POST sends an alert to the members for a user
     def send_alert
-        @user = User.find_by(user_params)
-        @members = @user.members
+        id = params[:id]
+        lon = params[:lon]
+        lat = params[:lat]
+    
+        @user = User.find_by(id: id)
         
-        @members.each do |member|
-            member.send_message "This is a test msg"
+        if not @user.nil?
+            @members = @user.members
+            
+            @members.each do |member|
+                send_message member.number, "This is a test msg lat #{lat} lon#{lon}"
+            end
+            render json: "ok"
+        else
+            render json: "error"
         end
-        
-        render json: ""
     end
 
     def user_params
       params.require(:user).permit(:number)
+    end
+    
+    def send_message(number, message) 
+        puts TWILIO
+        msg = TWILIO.account.messages.create(
+            :from => TWILIO_NUMBER,
+            :to => number,
+            :body => message
+        )
+        puts msg.to
     end
 end

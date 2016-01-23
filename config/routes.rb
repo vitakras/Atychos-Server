@@ -8,6 +8,8 @@ Rails.application.routes.draw do
    post 'user/sendalert' => 'user#send_alert'
    
    #Member Routes
+   get 'member' => 'members#index'
+   post 'member/add' => 'members#add'
    
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
